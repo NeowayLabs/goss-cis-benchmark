@@ -2,9 +2,6 @@
 # CIS Ubuntu Linux 16.04 LTS Benchmark v1.1.0
 #
 # 2 Services
-# 2.1 inetd Services
-# 2.1.1 Ensure chargen services are not enabled (Scored)
-#
 command:
   grep -R "^chargen" /etc/inetd.* || exit 1:
      exit-status: 1
@@ -97,7 +94,3 @@ command:
      exit-status: 1
   dpkg -s ldap-utils:
      exit-status: 1
-
-
-
-
