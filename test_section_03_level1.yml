@@ -5,156 +5,151 @@
 #
 # 3.1.1 Ensure IP forwarding is disabled (Scored)
 # 3.1.2 Ensure packet redirect sending is disabled (Scored)
-
 command:
   sysctl net.ipv4.ip_forward:
     exit-status: 0
     stdout:
-    - net.ipv4.ip_forward = 0
+      - net.ipv4.ip_forward = 0
     stderr: []
     timeout: 10000
   sysctl net.ipv4.conf.all.send_redirects:
     exit-status: 0
     stdout:
-    - net.ipv4.conf.all.send_redirects = 0
+      - net.ipv4.conf.all.send_redirects = 0
     stderr: []
     timeout: 10000
   sysctl net.ipv4.conf.default.send_redirects:
     exit-status: 0
     stdout:
-    - net.ipv4.conf.default.send_redirects = 0
+      - net.ipv4.conf.default.send_redirects = 0
     stderr: []
     timeout: 10000
-
-# 3.2 Network Parameters (Host and Router)
-#
-# 3.2.1 Ensure source routed packets are not accepted (Scored)
-# 3.2.2 Ensure ICMP redirects are not accepted (Scored)
-# 3.2.3 Ensure secure ICMP redirects are not accepted (Scored)
-# 3.2.4 Ensure suspicious packets are logged (Scored)
-# 3.2.5 Ensure broadcast ICMP requests are ignored (Scored)
-# 3.2.6 Ensure bogus ICMP responses are ignored (Scored)
-# 3.2.7 Ensure Reverse Path Filtering is enabled (Scored)
-# 3.2.8 Ensure TCP SYN Cookies is enabled (Scored)
-
+  # 3.2 Network Parameters (Host and Router)
+  #
+  # 3.2.1 Ensure source routed packets are not accepted (Scored)
+  # 3.2.2 Ensure ICMP redirects are not accepted (Scored)
+  # 3.2.3 Ensure secure ICMP redirects are not accepted (Scored)
+  # 3.2.4 Ensure suspicious packets are logged (Scored)
+  # 3.2.5 Ensure broadcast ICMP requests are ignored (Scored)
+  # 3.2.6 Ensure bogus ICMP responses are ignored (Scored)
+  # 3.2.7 Ensure Reverse Path Filtering is enabled (Scored)
+  # 3.2.8 Ensure TCP SYN Cookies is enabled (Scored)
   sysctl net.ipv4.conf.all.accept_source_route:
     exit-status: 0
     stdout:
-    - net.ipv4.conf.all.accept_source_route = 0
+      - net.ipv4.conf.all.accept_source_route = 0
     stderr: []
     timeout: 10000
   sysctl net.ipv4.conf.default.accept_source_route:
     exit-status: 0
     stdout:
-    - net.ipv4.conf.default.accept_source_route = 0
+      - net.ipv4.conf.default.accept_source_route = 0
     stderr: []
     timeout: 10000
   sysctl net.ipv4.conf.all.accept_redirects:
     exit-status: 0
     stdout:
-    - net.ipv4.conf.all.accept_redirects = 0
+      - net.ipv4.conf.all.accept_redirects = 0
     stderr: []
     timeout: 10000
   sysctl net.ipv4.conf.default.accept_redirects:
     exit-status: 0
     stdout:
-    - net.ipv4.conf.default.accept_redirects = 0
+      - net.ipv4.conf.default.accept_redirects = 0
     stderr: []
     timeout: 10000
   sysctl net.ipv4.conf.all.secure_redirects:
     exit-status: 0
     stdout:
-    - net.ipv4.conf.all.secure_redirects = 0
+      - net.ipv4.conf.all.secure_redirects = 0
     stderr: []
     timeout: 10000
   sysctl net.ipv4.conf.default.secure_redirects:
     exit-status: 0
     stdout:
-    - net.ipv4.conf.default.secure_redirects = 0
+      - net.ipv4.conf.default.secure_redirects = 0
     stderr: []
     timeout: 10000
   sysctl net.ipv4.conf.all.log_martians:
     exit-status: 0
     stdout:
-    - net.ipv4.conf.all.log_martians = 1
+      - net.ipv4.conf.all.log_martians = 1
     stderr: []
     timeout: 10000
   sysctl net.ipv4.conf.default.log_martians:
     exit-status: 0
     stdout:
-    - net.ipv4.conf.default.log_martians = 1
+      - net.ipv4.conf.default.log_martians = 1
     stderr: []
     timeout: 10000
   sysctl net.ipv4.icmp_echo_ignore_broadcasts:
     exit-status: 0
     stdout:
-    - net.ipv4.icmp_echo_ignore_broadcasts = 1
+      - net.ipv4.icmp_echo_ignore_broadcasts = 1
     stderr: []
     timeout: 10000
   sysctl net.ipv4.icmp_ignore_bogus_error_responses:
     exit-status: 0
     stdout:
-    - net.ipv4.icmp_ignore_bogus_error_responses = 1
+      - net.ipv4.icmp_ignore_bogus_error_responses = 1
     stderr: []
     timeout: 10000
   sysctl net.ipv4.conf.all.rp_filter:
     exit-status: 0
     stdout:
-    - net.ipv4.conf.all.rp_filter = 1
+      - net.ipv4.conf.all.rp_filter = 1
     stderr: []
     timeout: 10000
   sysctl net.ipv4.conf.default.rp_filter:
     exit-status: 0
     stdout:
-    - net.ipv4.conf.default.rp_filter = 1
+      - net.ipv4.conf.default.rp_filter = 1
     stderr: []
     timeout: 10000
   sysctl net.ipv4.tcp_syncookies:
     exit-status: 0
     stdout:
-    - net.ipv4.tcp_syncookies = 1
+      - net.ipv4.tcp_syncookies = 1
     stderr: []
     timeout: 10000
-
   # 3.3 IPv6
   #
   # 3.3.1 Ensure IPv6 router advertisements are not accepted (Not Scored)
   # 3.3.2 Ensure IPv6 redirects are not accepted (Not Scored)
   # 3.3.3 Ensure IPv6 is disabled (Not Scored)
-
   sysctl net.ipv6.conf.all.accept_ra:
     exit-status: 0
     stdout:
-    - net.ipv6.conf.all.accept_ra = 0
+      - net.ipv6.conf.all.accept_ra = 0
     stderr: []
     timeout: 10000
   sysctl net.ipv6.conf.default.accept_ra:
     exit-status: 0
     stdout:
-    - net.ipv6.conf.default.accept_ra = 0
+      - net.ipv6.conf.default.accept_ra = 0
     stderr: []
     timeout: 10000
   sysctl net.ipv6.conf.all.accept_redirects:
     exit-status: 0
     stdout:
-    - net.ipv6.conf.all.accept_redirects = 0
+      - net.ipv6.conf.all.accept_redirects = 0
     stderr: []
     timeout: 10000
   sysctl net.ipv6.conf.default.accept_redirects:
     exit-status: 0
     stdout:
-    - net.ipv6.conf.default.accept_redirects = 0
+      - net.ipv6.conf.default.accept_redirects = 0
     stderr: []
     timeout: 10000
   sysctl net.ipv6.conf.all.disable_ipv6:
     exit-status: 0
     stdout:
-    - net.ipv6.conf.all.disable_ipv6 = 1
+      - net.ipv6.conf.all.disable_ipv6 = 1
     stderr: []
     timeout: 10000
   sysctl net.ipv6.conf.lo.disable_ipv6:
     exit-status: 0
     stdout:
-    - net.ipv6.conf.lo.disable_ipv6 = 1
+      - net.ipv6.conf.lo.disable_ipv6 = 1
     stderr: []
     timeout: 10000
