@@ -38,8 +38,6 @@ file:
       - "ClientAliveCountMax 0"
       - "LoginGraceTime 60"
       - "Banner /etc/issue.net"
-
-file:
   /etc/issue.net:
     exists: true
     mode: "0600"
