@@ -114,34 +114,38 @@ command:
   # 1.6.3 Ensure SELinux or AppArmor are installed (Scored) - NOT - level2
   # 1.7 Warning Banners
   # 1.7.1 Command Line Warning Banners
-  # 1.7.1.2 Ensure local login warning banner is configured properly (Not Scored)
-  cat /etc/motd:
-    exit-status: 0
-    stdout:
-      - "Authorized uses only. All activity may be monitored and reported."  
-  # 1.7.1.3 Ensure remote login warning banner is configured properly (Not Scored)
-  cat /etc/issue.net:
-    exit-status: 0
-    stdout:
-      - "Authorized uses only. All activity may be monitored and reported."
-  # 1.7.1.4 Ensure permissions on /etc/motd are configured (Not Scored)
-  stat /etc/motd | grep -E "Access:\s+\(0644\/-rw-r--r--\)\s+Uid:\s+\(\s+0\/\s+root\)\s+Gid:\s+\(\s+0\/\s+root\)":
-    exit-status: 0 
-    stdout:
-      - "Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)"
-  # 1.7.1.5 Ensure permissions on /etc/issue are configured (Scored)
-  stat /etc/issue | grep -E "Access:\s+\(0644\/-rw-r--r--\)\s+Uid:\s+\(\s+0\/\s+root\)\s+Gid:\s+\(\s+0\/\s+root\)":
-    exit-status: 0 
-    stdout:
-      - "Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)"
-  # 1.7.1.6 Ensure permissions on /etc/issue.net are configured (Not Scored)
-  stat /etc/issue.net | grep -E "Access:\s+\(0644\/-rw-r--r--\)\s+Uid:\s+\(\s+0\/\s+root\)\s+Gid:\s+\(\s+0\/\s+root\)":
-    exit-status: 0 
-    stdout:
-      - "Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)"
+
   # 1.7.2 Ensure GDM login banner is configured (Scored) - NOT
   # 1.8 Ensure updates, patches, and additional security software are installed (Not Scored)
   apt-get -s upgrade:
     exit-status: 0
     stdout: []
-  
+
+
+file:
+  # 1.7.1.2 Ensure local login warning banner is configured properly (Not Scored)
+  /etc/motd:
+    contains:
+      - "Authorized uses only. All activity may be monitored and reported."  
+  # 1.7.1.3 Ensure remote login warning banner is configured properly (Not Scored)
+  /etc/issue.net:
+    contains:
+      - "Authorized uses only. All activity may be monitored and reported."
+  # 1.7.1.4 Ensure permissions on /etc/motd are configured (Not Scored)
+  /etc/motd:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+  # 1.7.1.5 Ensure permissions on /etc/issue are configured (Scored)s
+  /etc/issue:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+  # 1.7.1.6 Ensure permissions on /etc/issue.net are configured (Not Scored)
+  /etc/issue.net:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
