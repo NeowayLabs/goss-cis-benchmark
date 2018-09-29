@@ -1,6 +1,6 @@
 ---
 language: python
 install:
-  - pip install --user yamllint
+  - pip install yamllint
 script:
   - yamllint .
