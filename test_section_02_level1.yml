@@ -19,7 +19,8 @@ command:
     exit-status: 1
   grep -R "^exec" /etc/inetd.* || exit 1:
     exit-status: 1
-    grep -R "^talk" /etc/inetd.* || exit 1:
+  grep -R "^talk" /etc/inetd.* || exit 1:
+    exit-status: 1
   grep -R "^ntalk" /etc/inetd.* || exit 1:
     exit-status: 1
   grep -R "^telnet" /etc/inetd.* || exit 1:
