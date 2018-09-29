@@ -1,0 +1,6 @@
+---
+language: python
+install:
+  - pip install --user yamllint
+script:
+  - yamllint .
