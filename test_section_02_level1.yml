@@ -26,70 +26,90 @@ command:
     exit-status: 1
   grep -R "^tftp" /etc/inetd.* || exit 1:
     exit-status: 1
-  systemctl is-enabled xinetd:
-    exit-status: 1
-  dpkg -s openbsd-inetd:
-    exit-status: 1
-  dpkg -s ntp:
-    exit-status: 0
-  # dpkg -s chrony:
-  #    exit-status: 0
   grep "^restrict" /etc/ntp.conf:
     exit-status: 0
     stdout:
       - "restrict -4 default kod nomodify notrap nopeer noquery"
       - "restrict -6 default kod nomodify notrap nopeer noquery"
-  # grep "^(server|pool)" /etc/chrony/chrony.conf:
-  # exit-status: 0
-  # stdout:
-  # - "server <remote-server>"
-  dpkg -l xserver-xorg*:
-    exit-status: 0
-  systemctl is-enabled avahi-daemon:
-    exit-status: 1
-  systemctl is-enabled cups:
-    exit-status: 1
-  systemctl is-enabled isc-dhcp-server:
-    exit-status: 1
-  systemctl is-enabled isc-dhcp-server6:
-    exit-status: 1
-  systemctl is-enabled slapd:
-    exit-status: 1
-  systemctl is-enabled nfs-server:
-    exit-status: 1
-  systemctl is-enabled rpcbind:
-    exit-status: 1
-  systemctl is-enabled bind9:
-    exit-status: 1
-  systemctl is-enabled vsftpd:
-    exit-status: 1
-  systemctl is-enabled apache2:
-    exit-status: 1
-  systemctl is-enabled dovecot:
-    exit-status: 1
-  systemctl is-enabled smbd:
-    exit-status: 1
-  systemctl is-enabled squid:
-    exit-status: 1
-  systemctl is-enabled snmpd:
-    exit-status: 1
-  netstat -an | grep LIST | grep ":25[[:space:]]":
-    exit-status: 0
-    stdout:
-      - "tcp 0 0 127.0.0.1:25 0.0.0.0:* LISTEN"
-  systemctl is-enabled rsync:
-    exit-status: 1
-  systemctl is-enabled nis:
-    exit-status: 1
-  dpkg -s nis:
-    exit-status: 1
-  dpkg -s rsh-client:
-    exit-status: 1
-  dpkg -s rsh-redone-client:
-    exit-status: 1
-  dpkg -s talk:
-    exit-status: 1
-  dpkg -s telnet:
-    exit-status: 1
-  dpkg -s ldap-utils:
-    exit-status: 1
+# grep "^(server|pool)" /etc/chrony/chrony.conf:
+# exit-status: 0
+# stdout:
+# - "server <remote-server>"
+service:
+  xinetd:
+    enabled: false
+    running: false
+  avahi-daemon:
+    enabled: false
+    running: false
+  cups:
+    enabled: false
+    running: false
+  isc-dhcp-server:
+    enabled: false
+    running: false
+  isc-dhcp-server6:
+    enabled: false
+    running: false
+  slapd:
+    enabled: false
+    running: false
+  nfs-server:
+    enabled: false
+    running: false
+  rpcbind:
+    enabled: false
+    running: false
+  bind9:
+    enabled: false
+    running: false
+  vsftpd:
+    enabled: false
+    running: false
+  apache2:
+    enabled: false
+    running: false
+  dovecot:
+    enabled: false
+    running: false
+  smbd:
+    enabled: false
+    running: false
+  squid:
+    enabled: false
+    running: false
+  snmpd:
+    enabled: false
+    running: false
+  rsync:
+    enabled: false
+    running: false
+  nis:
+    enabled: false
+    running: false
+package:
+  nis:
+    installed: false
+  rsh-client:
+    installed: false
+  rsh-redone-client:
+    installed: false
+  talk:
+    installed: false
+  telnet:
+    installed: false
+  ldap-utils:
+    installed: false
+  openbsd-inetd:
+    installed: false
+  ntp:
+    installed: true
+  chrony:
+    installed: true
+  xserver-xorg*:
+    installed: false
+port:
+  tcp:25:
+    listening: true
+    ip:
+      - 127.0.0.1
