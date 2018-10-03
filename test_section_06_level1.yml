@@ -14,6 +14,7 @@
 # 6.1.11 Ensure no unowned files or directories exist (Scored)
 # 6.1.12 Ensure no ungrouped files or directories exist (Scored)
 # 6.1.13 Audit SUID executables (Not Scored)
+# 6.1.14 Audit SGID executables (Not Scored)
 
 file:
   /etc/passwd:
@@ -70,50 +71,42 @@ command:
     exit-status: 0
     stderr: []
     timeout: 10000
-  df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -4000:
+  df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -4000 | wc -l:
     exit-status: 0
-    stdout:
-      - "/sbin/mount.cifs"
-      - "/usr/bin/pkexec"
-      - "/usr/bin/sudo"
-      - "/usr/bin/at"
-      - "/usr/bin/newgrp"
-      - "/usr/bin/newuidmap"
-      - "/usr/bin/chsh"
-      - "/usr/bin/newgidmap"
-      - "/usr/bin/passwd"
-      - "/usr/bin/gpasswd"
-      - "/usr/bin/chfn"
-      - "/usr/lib/eject/dmcrypt-get-device"
-      - "/usr/lib/openssh/ssh-keysign"
-      - "/usr/lib/policykit-1/polkit-agent-helper-1"
-      - "/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic"
-      - "/usr/lib/dbus-1.0/dbus-daemon-launch-helper"
-      - "/usr/lib/snapd/snap-confine"
-      - "/bin/ping"
-      - "/bin/ntfs-3g"
-      - "/bin/umount"
-      - "/bin/fusermount"
-      - "/bin/su"
-      - "/bin/ping6"
-
+    stdout: [24]
     stderr: []
     timeout: 10000
-  df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -2000:
+  df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -2000 | wc -l:
     exit-status: 0
-    stdout:
-      - /sbin/pam_extrausers_chkpwd
-      - /sbin/unix_chkpwd
-      - /usr/bin/screen
-      - /usr/bin/mlocate
-      - /usr/bin/wall
-      - /usr/bin/bsd-write
-      - /usr/bin/at
-      - /usr/bin/chage
-      - /usr/bin/expiry
-      - /usr/bin/ssh-agent
-      - /usr/bin/crontab
-      - /usr/lib/x86_64-linux-gnu/utempter/utempter
-      - /usr/lib/snapd/snap-confine
+    stdout:[13]
+    stderr: []
+    timeout: 10000
+
+# 6.2 User and Group Settings
+# 6.2.1 Ensure password fields are not empty (Scored)
+# 6.2.2 Ensure no legacy "+" entries exist in /etc/passwd (Scored)
+# 6.2.3 Ensure no legacy "+" entries exist in /etc/shadow (Scored)
+# 6.2.4 Ensure no legacy "+" entries exist in /etc/group (Scored)
+# 6.2.5 Ensure root is the only UID 0 account (Scored)
+
+  cat /etc/shadow | awk -F: '($2 == "" )':
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  grep '^\+:' /etc/passwd:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  grep '^\+:' /etc/shadow:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  grep '^\+:' /etc/group:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  cat /etc/passwd | awk -F: '($3 == 0) { print $1 }':
+    exit-status: 0
+    stdout: "root"
     stderr: []
     timeout: 10000
