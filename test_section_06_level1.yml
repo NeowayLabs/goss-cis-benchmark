@@ -52,11 +52,6 @@ file:
     mode: "0644"
     owner: root
     group: root
-  /etc/gshadow-:
-    exists: true
-    mode: "0640"
-    owner: root
-    group: shadow
 
 command:
   df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002:
@@ -104,7 +99,7 @@ command:
 # 6.2.19 Ensure no duplicate group names exist (Scored)
 # 6.2.20 Ensure shadow group is empty (Scored)
 
-  cat /etc/shadow | awk -F: '($2 == "" )':
+  cat /etc/shadow | awk -F':'($2 == "" )':
     exit-status: 0
     stderr: []
     timeout: 10000
@@ -120,7 +115,7 @@ command:
     exit-status: 0
     stderr: []
     timeout: 10000
-  cat /etc/passwd | awk -F: '($3 == 0) { print $1 }':
+  cat /etc/passwd | awk -F':' '($3 == 0) { print $1 }':
     exit-status: 0
     stdout: "root"
     stderr: []
