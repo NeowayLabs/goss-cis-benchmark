@@ -99,7 +99,7 @@ command:
 # 6.2.19 Ensure no duplicate group names exist (Scored)
 # 6.2.20 Ensure shadow group is empty (Scored)
 
-  cat /etc/shadow | awk -F':'($2 == "" )':
+  cat /etc/shadow | awk -F':''($2 == "" )':
     exit-status: 0
     stderr: []
     timeout: 10000
