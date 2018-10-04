@@ -88,6 +88,21 @@ command:
 # 6.2.3 Ensure no legacy "+" entries exist in /etc/shadow (Scored)
 # 6.2.4 Ensure no legacy "+" entries exist in /etc/group (Scored)
 # 6.2.5 Ensure root is the only UID 0 account (Scored)
+# 6.2.6 Ensure root PATH Integrity (Scored)
+# 6.2.7 Ensure all users' home directories exist (Scored)
+# 6.2.8 Ensure users' home directories permissions are 750 or more restrictive (Scored)
+# 6.2.9 Ensure users own their home directories (Scored)
+# 6.2.10 Ensure users' dot files are not group or world writable (Scored)
+# 6.2.11 Ensure no users have .forward files (Scored)
+# 6.2.12 Ensure no users have .netrc files (Scored)
+# 6.2.13 Ensure users' .netrc Files are not group or world accessible (Scored)
+# 6.2.14 Ensure no users have .rhosts files (Scored)
+# 6.2.15 Ensure all groups in /etc/passwd exist in /etc/group (Scored)
+# 6.2.16 Ensure no duplicate UIDs exist (Scored)
+# 6.2.17 Ensure no duplicate GIDs exist (Scored)
+# 6.2.18 Ensure no duplicate user names exist (Scored)
+# 6.2.19 Ensure no duplicate group names exist (Scored)
+# 6.2.20 Ensure shadow group is empty (Scored)
 
   cat /etc/shadow | awk -F: '($2 == "" )':
     exit-status: 0
@@ -108,5 +123,77 @@ command:
   cat /etc/passwd | awk -F: '($3 == 0) { print $1 }':
     exit-status: 0
     stdout: "root"
+    stderr: []
+    timeout: 10000
+  echo "Empty Directory in PATH (::)" && echo $PATH | grep "::":
+    exit-status: 1
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-6.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-7.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-8.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-9.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-10.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-11.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-12.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-13.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-14.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-15.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-16.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-17.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-17.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-18.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/scripts/test_section_06_level1/6-2-19.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  grep ^shadow:[^:]*:[^:]*:[^:]+ /etc/group:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  awk -F':' '($4 == "<shadow-gid>") { print }' /etc/passwd:
+    exit-status: 0
     stderr: []
     timeout: 10000
