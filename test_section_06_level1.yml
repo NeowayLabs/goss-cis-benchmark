@@ -73,7 +73,7 @@ command:
     timeout: 10000
   df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -2000 | wc -l:
     exit-status: 0
-    stdout:[13]
+    stdout: [13]
     stderr: []
     timeout: 10000
 
@@ -99,7 +99,7 @@ command:
 # 6.2.19 Ensure no duplicate group names exist (Scored)
 # 6.2.20 Ensure shadow group is empty (Scored)
 
-  cat /etc/shadow | awk -F':''($2 == "" )':
+  cat /etc/shadow | awk -F':' '($2 == "" )':
     exit-status: 0
     stderr: []
     timeout: 10000
@@ -165,10 +165,6 @@ command:
     stderr: []
     timeout: 10000
   bash /tmp/scripts/test_section_06_level1/6-2-16.sh:
-    exit-status: 0
-    stderr: []
-    timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-17.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
