@@ -117,7 +117,8 @@ command:
     timeout: 10000
   cat /etc/passwd | awk -F':' '($3 == 0) { print $1 }':
     exit-status: 0
-    stdout: "root"
+    stdout:
+      - root
     stderr: []
     timeout: 10000
   echo "Empty Directory in PATH (::)" && echo $PATH | grep "::":
