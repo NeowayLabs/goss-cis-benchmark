@@ -10,6 +10,8 @@ set -o errexit
 set -o nounset
 
 declare dir=""
+declare file=""
+declare fileperm=""
 declare line=""
 declare status="0"
 declare stderr="0"
