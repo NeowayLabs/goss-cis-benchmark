@@ -13,6 +13,7 @@ set -o nounset
 declare id=""
 declare l=""
 declare line=""
+declare qtd=""
 declare status="0"
 declare stderr="0"
 declare users=""
