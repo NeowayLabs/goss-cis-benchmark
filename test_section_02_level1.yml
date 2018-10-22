@@ -1,0 +1,116 @@
+---
+# CIS Ubuntu Linux 16.04 LTS Benchmark v1.1.0
+#
+# 2 Services
+command:
+  grep -R "^chargen" /etc/inetd.* || exit 1:
+    exit-status: 1
+  grep -R "^daytime" /etc/inetd.* || exit 1:
+    exit-status: 1
+  grep -R "^discard" /etc/inetd.* || exit 1:
+    exit-status: 1
+  grep -R "^echo" /etc/inetd.* || exit 1:
+    exit-status: 1
+  grep -R "^time" /etc/inetd.* || exit 1:
+    exit-status: 1
+  grep -R "^shell" /etc/inetd.* || exit 1:
+    exit-status: 1
+  grep -R "^login" /etc/inetd.* || exit 1:
+    exit-status: 1
+  grep -R "^exec" /etc/inetd.* || exit 1:
+    exit-status: 1
+  grep -R "^talk" /etc/inetd.* || exit 1:
+    exit-status: 1
+  grep -R "^ntalk" /etc/inetd.* || exit 1:
+    exit-status: 1
+  grep -R "^telnet" /etc/inetd.* || exit 1:
+    exit-status: 1
+  grep -R "^tftp" /etc/inetd.* || exit 1:
+    exit-status: 1
+  grep "^restrict" /etc/ntp.conf:
+    exit-status: 0
+    stdout:
+      - "restrict -4 default kod nomodify notrap nopeer noquery"
+      - "restrict -6 default kod nomodify notrap nopeer noquery"
+# grep "^(server|pool)" /etc/chrony/chrony.conf:
+# exit-status: 0
+# stdout:
+# - "server <remote-server>"
+service:
+  xinetd:
+    enabled: false
+    running: false
+  avahi-daemon:
+    enabled: false
+    running: false
+  cups:
+    enabled: false
+    running: false
+  isc-dhcp-server:
+    enabled: false
+    running: false
+  isc-dhcp-server6:
+    enabled: false
+    running: false
+  slapd:
+    enabled: false
+    running: false
+  nfs-server:
+    enabled: false
+    running: false
+  rpcbind:
+    enabled: false
+    running: false
+  bind9:
+    enabled: false
+    running: false
+  vsftpd:
+    enabled: false
+    running: false
+  apache2:
+    enabled: false
+    running: false
+  dovecot:
+    enabled: false
+    running: false
+  smbd:
+    enabled: false
+    running: false
+  squid:
+    enabled: false
+    running: false
+  snmpd:
+    enabled: false
+    running: false
+  rsync:
+    enabled: false
+    running: false
+  nis:
+    enabled: false
+    running: false
+package:
+  nis:
+    installed: false
+  rsh-client:
+    installed: false
+  rsh-redone-client:
+    installed: false
+  talk:
+    installed: false
+  telnet:
+    installed: false
+  ldap-utils:
+    installed: false
+  openbsd-inetd:
+    installed: false
+  ntp:
+    installed: true
+  chrony:
+    installed: true
+  xserver-xorg*:
+    installed: false
+port:
+  tcp:25:
+    listening: true
+    ip:
+      - 127.0.0.1

@@ -1,0 +1,10 @@
+---
+language: python
+before_install:
+  - sudo curl -L https://github.com/aelsabbahy/goss/releases/download/v0.3.6/goss-linux-amd64 -o /usr/local/bin/goss
+  - sudo chmod +rx /usr/local/bin/goss
+install:
+  - pip install yamllint
+script:
+  - yamllint .
+  - bash hack/test.sh
