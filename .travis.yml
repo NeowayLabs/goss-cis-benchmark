@@ -6,5 +6,5 @@ before_install:
 install:
   - pip install yamllint
 script:
-  - yamllint .
+  - yamllint --strict .
   - bash hack/test.sh
