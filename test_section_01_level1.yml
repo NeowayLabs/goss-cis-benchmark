@@ -35,11 +35,6 @@ command:
     exit-status: 1
   lsmod | grep udf:
     exit-status: 1
-  # 1.1.1.5 Ensure mounting of hfsplus filesystems is disabled (Scored)
-  modprobe -n -v hfsplus:
-    exit-status: 1
-  lsmod | grep hfsplus:
-    exit-status: 1
   # 1.1.2 Ensure separate partition exists for /tmp (Scored) - NOT - level2
   # 1.1.3 Ensure nodev option set on /tmp partition (Scored) - NOT
   # 1.1.4 Ensure nosuid option set on /tmp partition (Scored) - NOT - level2
@@ -81,7 +76,7 @@ command:
   # 1.5.1 Ensure core dumps are restricted (Scored)
   sysctl fs.suid_dumpable:
     exit-status: 0
-    stdout: 
+    stdout:
       - "fs.suid_dumpable = 0"
   # 1.5.2 Ensure XD/NX support is enabled (Not Scored)
   dmesg | grep NX:
@@ -123,31 +118,31 @@ package:
 # 1.7 Warning Banners
 # 1.7.1 Command Line Warning Banners
 file:
+  # 1.7.1.1 Ensure message of the day is configured properly (Scored) - NOT
   # 1.7.1.2 Ensure local login warning banner is configured properly (Not Scored)
-  /etc/motd:
-    contains:
-      - "Authorized uses only. All activity may be monitored and reported."  
   # 1.7.1.3 Ensure remote login warning banner is configured properly (Not Scored)
-  /etc/issue.net:
-    contains:
-      - "Authorized uses only. All activity may be monitored and reported."
   # 1.7.1.4 Ensure permissions on /etc/motd are configured (Not Scored)
+  # 1.7.1.5 Ensure permissions on /etc/issue are configured (Scored)
+  # 1.7.1.6 Ensure permissions on /etc/issue.net are configured (Not Scored)
   /etc/motd:
     exists: true
     mode: "0644"
     owner: root
     group: root
-  # 1.7.1.5 Ensure permissions on /etc/issue are configured (Scored)s
+    contains:
+      - "Authorized uses only. All activity may be monitored and reported."
   /etc/issue:
     exists: true
     mode: "0644"
     owner: root
     group: root
-  # 1.7.1.6 Ensure permissions on /etc/issue.net are configured (Not Scored)
+    contains:
+      - "Authorized uses only. All activity may be monitored and reported."
   /etc/issue.net:
     exists: true
     mode: "0644"
     owner: root
     group: root
+    contains:
+      - "Authorized uses only. All activity may be monitored and reported."
 # 1.7.2 Ensure GDM login banner is configured (Scored) - NOT
-
