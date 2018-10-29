@@ -124,59 +124,59 @@ command:
     exit-status: 1
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-6.sh:
+  bash /tmp/6-2-6.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-7.sh:
+  bash /tmp/6-2-7.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-8.sh:
+  bash /tmp/6-2-8.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-9.sh:
+  bash /tmp/6-2-9.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-10.sh:
+  bash /tmp/6-2-10.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-11.sh:
+  bash /tmp/6-2-11.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-12.sh:
+  bash /tmp/6-2-12.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-13.sh:
+  bash /tmp/6-2-13.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-14.sh:
+  bash /tmp/6-2-14.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-15.sh:
+  bash /tmp/6-2-15.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-16.sh:
+  bash /tmp/6-2-16.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-17.sh:
+  bash /tmp/6-2-17.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-18.sh:
+  bash /tmp/6-2-18.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
-  bash /tmp/scripts/test_section_06_level1/6-2-19.sh:
+  bash /tmp/6-2-19.sh:
     exit-status: 0
     stderr: []
     timeout: 10000
