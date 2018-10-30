@@ -27,15 +27,10 @@ command:
     exit-status: 1
   grep -R "^tftp" /etc/inetd.* || exit 1:
     exit-status: 1
-  grep "^restrict" /etc/ntp.conf:
+  grep "^listen " /etc/openntpd/ntpd.conf:
+    exit-status: 1
+  if [[ `grep -c "^servers " /etc/openntpd/ntpd.conf` -lt "4" ]]; then exit 1 ; fi:
     exit-status: 0
-    stdout:
-      - "restrict -4 default kod nomodify notrap nopeer noquery"
-      - "restrict -6 default kod nomodify notrap nopeer noquery"
-# grep "^(server|pool)" /etc/chrony/chrony.conf:
-# exit-status: 0
-# stdout:
-# - "server <remote-server>"
 service:
   xinetd:
     enabled: false
@@ -103,14 +98,10 @@ package:
     installed: false
   openbsd-inetd:
     installed: false
-  ntp:
-    installed: true
-  chrony:
+  openntpd:
     installed: true
   xserver-xorg*:
     installed: false
 port:
   tcp:25:
-    listening: true
-    ip:
-      - 127.0.0.1
+    listening: false
