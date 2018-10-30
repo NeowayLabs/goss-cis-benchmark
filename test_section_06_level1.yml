@@ -39,17 +39,17 @@ file:
     group: shadow
   /etc/passwd-:
     exists: true
-    mode: "0644"
+    mode: "0600"
     owner: root
     group: root
   /etc/gshadow-:
     exists: true
-    mode: "0640"
+    mode: "0600"
     owner: root
-    group: shadow
+    group: root
   /etc/group-:
     exists: true
-    mode: "0644"
+    mode: "0600"
     owner: root
     group: root
 
@@ -61,14 +61,14 @@ command:
   df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser:
     exit-status: 0
     stderr: []
-    timeout: 10000
+    timeout: 100000
   df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup:
     exit-status: 0
     stderr: []
-    timeout: 10000
+    timeout: 100000
   df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -4000 | wc -l:
     exit-status: 0
-    stdout: [24]
+    stdout: [23]
     stderr: []
     timeout: 10000
   df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -2000 | wc -l:
@@ -102,15 +102,15 @@ command:
     exit-status: 0
     stderr: []
     timeout: 10000
-  grep '^\+:' /etc/passwd:
+  grep '^\+:' /etc/passwd || exit 0:
     exit-status: 0
     stderr: []
     timeout: 10000
-  grep '^\+:' /etc/shadow:
+  grep '^\+:' /etc/shadow || exit 0:
     exit-status: 0
     stderr: []
     timeout: 10000
-  grep '^\+:' /etc/group:
+  grep '^\+:' /etc/group | exit 0:
     exit-status: 0
     stderr: []
     timeout: 10000
@@ -180,11 +180,11 @@ command:
     exit-status: 0
     stderr: []
     timeout: 10000
-  grep ^shadow:[^:]*:[^:]*:[^:]+ /etc/group:
+  grep ^shadow:[^:]*:[^:]*:[^:]+ /etc/group || exit 0:
     exit-status: 0
     stderr: []
     timeout: 10000
-  awk -F':' '($4 == "<shadow-gid>") { print }' /etc/passwd:
+  awk -F':' '($4 == "<shadow-gid>") { print }' /etc/passwd || exit 0:
     exit-status: 0
     stderr: []
     timeout: 10000
