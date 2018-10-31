@@ -57,7 +57,7 @@ command:
   df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002:
     exit-status: 0
     stderr: []
-    timeout: 10000
+    timeout: 100000
   df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser:
     exit-status: 0
     stderr: []
@@ -70,12 +70,12 @@ command:
     exit-status: 0
     stdout: [23]
     stderr: []
-    timeout: 10000
+    timeout: 100000
   df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -2000 | wc -l:
     exit-status: 0
     stdout: [13]
     stderr: []
-    timeout: 10000
+    timeout: 100000
 
   # 6.2 User and Group Settings
   # 6.2.1 Ensure password fields are not empty (Scored)
