@@ -9,7 +9,6 @@
 # 1.1.1.3 Ensure mounting of jffs2 filesystems is disabled (Scored)
 # 1.1.1.4 Ensure mounting of hfs filesystems is disabled (Scored)
 # 1.1.1.5 Ensure mounting of hfsplus filesystems is disabled (Scored)
-# 1.1.1.6 Ensure mounting of udf filesystems is disabled (Scored)
 # 1.1.2 Ensure separate partition exists for /tmp (Scored) - NOT - level2
 # 1.1.3 Ensure nodev option set on /tmp partition (Scored) - NOT
 # 1.1.4 Ensure nosuid option set on /tmp partition (Scored) - NOT - level2
@@ -95,12 +94,6 @@ command:
     stdout:
       - "install /bin/false"
   lsmod | grep hfsplus:
-    exit-status: 1
-  modprobe -n -v udf:
-    exit-status: 0
-    stdout:
-      - "install /bin/false"
-  lsmod | grep udf:
     exit-status: 1
   df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d \( -perm -0002 -a ! -perm -1000 \) 2>/dev/null:
     exit-status: 0
