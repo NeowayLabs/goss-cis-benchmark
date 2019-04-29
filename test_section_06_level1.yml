@@ -114,14 +114,14 @@ command:
     exit-status: 1
     stderr: []
     timeout: 10000
- bash /tmp/6-1-13.sh:
-   exit-status: 0
-   stderr: []
-   timeout: 10000
- bash /tmp/6-1-14.sh:
-   exit-status: 0
-   stderr: []
-   timeout: 10000
+  bash /tmp/6-1-13.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
+  bash /tmp/6-1-14.sh:
+    exit-status: 0
+    stderr: []
+    timeout: 10000
   bash /tmp/6-2-6.sh:
     exit-status: 0
     stderr: []
