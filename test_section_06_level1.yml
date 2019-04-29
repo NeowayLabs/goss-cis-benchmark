@@ -66,16 +66,6 @@ command:
     exit-status: 0
     stderr: []
     timeout: 100000
-  df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -4000 | wc -l:
-    exit-status: 0
-    stdout: [23]
-    stderr: []
-    timeout: 100000
-  df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -2000 | wc -l:
-    exit-status: 0
-    stdout: [13]
-    stderr: []
-    timeout: 100000
 
   # 6.2 User and Group Settings
   # 6.2.1 Ensure password fields are not empty (Scored)
@@ -124,6 +114,14 @@ command:
     exit-status: 1
     stderr: []
     timeout: 10000
+ bash /tmp/6-1-13.sh:
+   exit-status: 0
+   stderr: []
+   timeout: 10000
+ bash /tmp/6-1-14.sh:
+   exit-status: 0
+   stderr: []
+   timeout: 10000
   bash /tmp/6-2-6.sh:
     exit-status: 0
     stderr: []
