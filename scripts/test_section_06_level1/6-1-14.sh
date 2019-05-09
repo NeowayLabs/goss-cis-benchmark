@@ -21,14 +21,14 @@ curl -v -H Metadata-Flavor:Google $url_google -f > /dev/null 2>&1 || status=1
 
 if [[ "${status}x" == "0x" ]]; then
   if [[ $count_SGID == "$gcp_binaries" ]]; then
-    exit 0
-  else
     exit 1
+  else
+    exit 0
   fi
 fi
 
 if [[ $count_SGID == "$azure_binaries" ]]; then
-  exit 0
-else
   exit 1
+else
+  exit 0
 fi
