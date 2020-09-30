@@ -9,7 +9,7 @@ Currently supports version 20.04 of Ubuntu Server.
 
 ## Requirements
 
-* [Goss](https://github.com/aelsabbahy/goss#installation).
+* [Goss](https://github.com/aelsabbahy/goss#installation)
 * Bash
 
 ## Usage
