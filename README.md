@@ -11,13 +11,13 @@ Currently supports version 20.04 of Ubuntu Server.
 
 ### Section 1
 
-  # 1.2.1 Ensure package manager repositories are configured (Manual): not implemented
-  # 1.2.2 Ensure GPG keys are configured (Manual): not implemented
-  # 1.4.1 Ensure AIDE is installed (Automated) : not implemented
-  # 1.4.2 Ensure filesystem integrity is regularly checked (Automated): not implemented
-  # 1.5.1 Ensure bootloader password is set (Automated): not implemented
-  # 1.5.2 Ensure permissions on bootloader config are configured (Automated): not implemented
-  # 1.5.3 Ensure authentication required for single user mode (Automated): not implemented
+  * 1.2.1 Ensure package manager repositories are configured (Manual): not implemented
+  * 1.2.2 Ensure GPG keys are configured (Manual): not implemented
+  * 1.4.1 Ensure AIDE is installed (Automated) : not implemented
+  * 1.4.2 Ensure filesystem integrity is regularly checked (Automated): not implemented
+  * 1.5.1 Ensure bootloader password is set (Automated): not implemented
+  * 1.5.2 Ensure permissions on bootloader config are configured (Automated): not implemented
+  * 1.5.3 Ensure authentication required for single user mode (Automated): not implemented
 
 ## Requirements
 
