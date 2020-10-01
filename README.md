@@ -25,6 +25,36 @@ Currently supports version 20.04 of Ubuntu Server.
   * 2.2.1.4 Ensure ntp is configured (Automated): not implemented
   * 2.4 Ensure nonessential services are removed or masked (Manual): not implemented
 
+### Section 3
+
+  * 3.5.1.1 Ensure Uncomplicated Firewall is installed (Automated): not implemented
+  * 3.5.1.2 Ensure iptables-persistent is not installed (Automated): not implemented
+  * 3.5.1.3 Ensure ufw service is enabled (Automated): not implemented
+  * 3.5.1.4 Ensure loopback traffic is configured (Automated): not implemented
+  * 3.5.1.5 Ensure outbound connections are configured (Manual): not implemented
+  * 3.5.1.6 Ensure firewall rules exist for all open ports (Manual): not implemented
+  * 3.5.1.7 Ensure default deny firewall policy (Automated): not implemented
+  * 3.5.2.1 Ensure nftables is installed (Automated): not implemented
+  * 3.5.2.2 Ensure Uncomplicated Firewall is not installed or disabled (Automated): not implemented
+  * 3.5.2.3 Ensure iptables are flushed (Manual): not implemented
+  * 3.5.2.4 Ensure a table exists (Automated): not implemented
+  * 3.5.2.5 Ensure base chains exist (Automated): not implemented
+  * 3.5.2.6 Ensure loopback traffic is configured (Automated): not implemented
+  * 3.5.2.7 Ensure outbound and established connections are configured (Manual): not implemented
+  * 3.5.2.8 Ensure default deny firewall policy (Automated): not implemented
+  * 3.5.2.9 Ensure nftables service is enabled (Automated): not implemented
+  * 3.5.2.10 Ensure nftables rules are permanent (Automated): not implemented
+  * 3.5.3.1.1 Ensure iptables packages are installed (Automated): not implemented
+  * 3.5.3.1.2 Ensure nftables is not installed (Automated): not implemented
+  * 3.5.3.1.3 Ensure Uncomplicated Firewall is not installed or disabled (Automated): not implemented
+  * 3.5.3.2.1 Ensure default deny firewall policy (Automated): not implemented
+  * 3.5.3.2.2 Ensure loopback traffic is configured (Automated): not implemented
+  * 3.5.3.2.4 Ensure firewall rules exist for all open ports (Automated): not implemented
+  * 3.5.3.3.1 Ensure IPv6 default deny firewall policy (Automated): not implemented
+  * 3.5.3.3.2 Ensure IPv6 loopback traffic is configured (Automated): not implemented
+  * 3.5.3.3.3 Ensure IPv6 outbound and established connections are configured (Manual): not implemented
+  * 3.5.3.3.4 Ensure IPv6 firewall rules exist for all open ports (Manual): not implemented
+
 ## Requirements
 
 * [Goss](https://github.com/aelsabbahy/goss#installation)
