@@ -19,6 +19,12 @@ Currently supports version 20.04 of Ubuntu Server.
   * 1.5.2 Ensure permissions on bootloader config are configured (Automated): not implemented
   * 1.5.3 Ensure authentication required for single user mode (Automated): not implemented
 
+### Section 2
+
+  * 2.2.1.2 Ensure systemd-timesyncd is configured (Manual): not implemented
+  * 2.2.1.4 Ensure ntp is configured (Automated): not implemented
+  * 2.4 Ensure nonessential services are removed or masked (Manual): not implemented
+
 ## Requirements
 
 * [Goss](https://github.com/aelsabbahy/goss#installation)

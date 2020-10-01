@@ -1,107 +1,123 @@
 ---
-# CIS Ubuntu Linux 16.04 LTS Benchmark v1.1.0
+# CIS Ubuntu Linux 20.04 LTS Benchmark v1.0.0
 #
 # 2 Services
+# 2.2.1.2 Ensure systemd-timesyncd is configured (Manual): not implemented
+# 2.2.1.4 Ensure ntp is configured (Automated): not implemented
+# 2.4 Ensure nonessential services are removed or masked (Manual): not implemented
+
 command:
-  grep -R "^chargen" /etc/inetd.* || exit 1:
-    exit-status: 1
-  grep -R "^daytime" /etc/inetd.* || exit 1:
-    exit-status: 1
-  grep -R "^discard" /etc/inetd.* || exit 1:
-    exit-status: 1
-  grep -R "^echo" /etc/inetd.* || exit 1:
-    exit-status: 1
-  grep -R "^time" /etc/inetd.* || exit 1:
-    exit-status: 1
-  grep -R "^shell" /etc/inetd.* || exit 1:
-    exit-status: 1
-  grep -R "^login" /etc/inetd.* || exit 1:
-    exit-status: 1
-  grep -R "^exec" /etc/inetd.* || exit 1:
-    exit-status: 1
-  grep -R "^talk" /etc/inetd.* || exit 1:
-    exit-status: 1
-  grep -R "^ntalk" /etc/inetd.* || exit 1:
-    exit-status: 1
-  grep -R "^telnet" /etc/inetd.* || exit 1:
-    exit-status: 1
-  grep -R "^tftp" /etc/inetd.* || exit 1:
-    exit-status: 1
-  grep "^listen " /etc/openntpd/ntpd.conf:
-    exit-status: 1
-  if [[ `grep -c "^servers " /etc/openntpd/ntpd.conf` -lt "4" ]]; then exit 1 ; fi:
+  # 2.2 Special Purpose Services
+  # 2.2.1 Time Synchronization
+  # 2.2.1.1 Ensure time synchronization is in use (Automated)
+  dpkg -s chrony:
     exit-status: 0
-service:
-  xinetd:
-    enabled: false
-    running: false
-  avahi-daemon:
-    enabled: false
-    running: false
-  cups:
-    enabled: false
-    running: false
-  isc-dhcp-server:
-    enabled: false
-    running: false
-  isc-dhcp-server6:
-    enabled: false
-    running: false
-  slapd:
-    enabled: false
-    running: false
-  nfs-server:
-    enabled: false
-    running: false
-  rpcbind:
-    enabled: false
-    running: false
-  bind9:
-    enabled: false
-    running: false
-  vsftpd:
-    enabled: false
-    running: false
-  apache2:
-    enabled: false
-    running: false
-  dovecot:
-    enabled: false
-    running: false
-  smbd:
-    enabled: false
-    running: false
-  squid:
-    enabled: false
-    running: false
-  snmpd:
-    enabled: false
-    running: false
-  rsync:
-    enabled: false
-    running: false
-  nis:
-    enabled: false
-    running: false
+  systemctl is-enabled chrony:
+    exit-status: 0
+    stdout:
+      - "enabled"
+
+  # 2.2.1.3 Ensure chrony is configured (Automated)
+  grep -E "^(server|pool)" /etc/chrony/chrony.conf:
+    exit-status: 0
+    stdout:
+      - "server metadata.google.internal iburst"
+
+  # 2.2.15 Ensure mail transfer agent is configured for local-only mode (Automated)
+  ss -lntu | grep -E ':25\s' | grep -E -v '\s(127.0.0.1|::1):25\s':
+    exit-status: 1
+    stdout: []
+
 package:
-  nis:
-    installed: false
-  rsh-client:
-    installed: false
-  rsh-redone-client:
-    installed: false
-  talk:
-    installed: false
-  telnet:
-    installed: false
-  ldap-utils:
-    installed: false
-  openbsd-inetd:
-    installed: false
-  openntpd:
-    installed: true
+  # 2.1 inetd Services
+  # 2.1.1 Ensure xinetd is not installed (Automated)
+  dpkg -s xinetd:
+    exit-status: 1
+
+  # 2.1.2 Ensure openbsd-inetd is not installed (Automated)
+  dpkg -s openbsd-inetd:
+    exit-status: 1
+
+  # 2.2.2 Ensure X Window System is not installed (Automated)
   xserver-xorg*:
     installed: false
-port:
-  tcp:25:
-    listening: false
+
+  #  2.2.3 Ensure Avahi Server is not installed (Automated)
+  avahi-daemon:
+    installed: false
+
+  # 2.2.4 Ensure CUPS is not installed (Automated)
+  cups:
+    installed: false
+
+  # 2.2.5 Ensure DHCP Server is not installed (Automated)
+  isc-dhcp-server:
+    installed: false
+
+  # 2.2.6 Ensure LDAP server is not installed (Automated)
+  slapd:
+    installed: false
+
+  # 2.2.7 Ensure NFS is not installed (Automated)
+  nfs-kernel-server:
+    installed: false
+
+  # 2.2.8 Ensure DNS Server is not installed (Automated)
+  bind9:
+    installed: false
+
+  # 2.2.9 Ensure FTP Server is not installed (Automated)
+  vsftpd:
+    installed: false
+
+  # 2.2.10 Ensure HTTP server is not installed (Automated)
+  apache2:
+    installed: false
+
+    # 2.2.11 Ensure IMAP and POP3 server are not installed (Automated)
+  dovecot-imapd:
+    installed: false
+  dovecot-pop3d:
+    installed: false
+
+    # 2.2.12 Ensure Samba is not installed (Automated)
+  samba:
+    installed: false
+
+    # 2.2.13 Ensure HTTP Proxy Server is not installed (Automated)
+  squid:
+    installed: false
+
+    # 2.2.14 Ensure SNMP Server is not installed (Automated)
+  snmpd:
+    installed: false
+
+  # 2.2.16 Ensure rsync service is not installed (Automated)
+  rsync:
+    installed: false
+
+  # 2.2.17 Ensure NIS Server is not installed (Automated)
+  # 2.3 Service Clients
+  # 2.3.1 Ensure NIS Client is not installed (Automated)
+  nis:
+    installed: false
+
+  # 2.3.2 Ensure rsh client is not installed (Automated)
+  rsh-client:
+    installed: false
+
+  # 2.3.3 Ensure talk client is not installed (Automated)
+  talk:
+    installed: false
+
+  # 2.3.4 Ensure telnet client is not installed (Automated)
+  telnet:
+    installed: false
+
+  # 2.3.5 Ensure LDAP client is not installed (Automated)
+  ldap-utils:
+    installed: false
+
+  # 2.3.6 Ensure RPC is not installed (Automated)
+  rpcbind:
+    installed: false
