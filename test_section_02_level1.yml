@@ -31,12 +31,12 @@ command:
 package:
   # 2.1 inetd Services
   # 2.1.1 Ensure xinetd is not installed (Automated)
-  dpkg -s xinetd:
-    exit-status: 1
+  xinetd:
+    installed: false
 
   # 2.1.2 Ensure openbsd-inetd is not installed (Automated)
-  dpkg -s openbsd-inetd:
-    exit-status: 1
+  openbsd-inetd:
+    installed: false
 
   # 2.2.2 Ensure X Window System is not installed (Automated)
   xserver-xorg*:
