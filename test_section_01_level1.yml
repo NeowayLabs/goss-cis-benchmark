@@ -1,11 +1,19 @@
 ---
-# CIS Ubuntu Linux 20.04 LTS Benchmark v1.1.0
-#
+# CIS Ubuntu Linux 20.04 LTS Benchmark v1.0.0
 #
 # 1 Initial Setup
-# 1.1 Filesystem Configuration
-# 1.1.1 Disable unused filesystems
+# 1.2.1 Ensure package manager repositories are configured (Manual): not implemented
+# 1.2.2 Ensure GPG keys are configured (Manual): not implemented
+# 1.4 Filesystem Integrity Checking
+# 1.4.1 Ensure AIDE is installed (Automated) : not implemented
+# 1.4.2 Ensure filesystem integrity is regularly checked (Automated): not implemented
+# 1.5 Secure Boot Settings
+# 1.5.1 Ensure bootloader password is set (Automated): not implemented
+# 1.5.3 Ensure authentication required for single user mode (Automated): not implemented
+
 command:
+  # 1.1 Filesystem Configuration
+  # 1.1.1 Disable unused filesystems
   # 1.1.1.1 Ensure mounting of cramfs filesystems is disabled (Automated)
   modprobe -n -v cramfs:
     exit-status: 0
@@ -107,8 +115,6 @@ command:
     exit-status: 1
 
   # 1.2 Configure Software Updates
-  # 1.2.1 Ensure package manager repositories are configured (Manual): not implemented
-  # 1.2.2 Ensure GPG keys are configured (Manual): not implemented
 
   # 1.3 Configure sudo
   # 1.3.1 Ensure sudo is installed (Automated)
@@ -127,19 +133,11 @@ command:
     stdout:
       - 'Defaults logfile="/var/log/sudo.log"'
 
-  # 1.4 Filesystem Integrity Checking
-  # 1.4.1 Ensure AIDE is installed (Automated) : not implemented
-  # 1.4.2 Ensure filesystem integrity is regularly checked (Automated): not implemented
-
-  # 1.5 Secure Boot Settings
-  # 1.5.1 Ensure bootloader password is set (Automated): not implemented
-  # 1.5.2 Ensure permissions on bootloader config are configured (Automated): not implemented
+  # 1.5.2 Ensure permissions on bootloader config are configured (Automated)
   stat -c "%a-%u-%g-%U-%G" /boot/grub/grub.cfg:
     exit-status: 0
     stdout:
       - "400-0-0-root-root"
-
-  # 1.5.3 Ensure authentication required for single user mode (Automated): not implemented
 
   # 1.6 Additional Process Hardening
   # 1.6.1 Ensure XD/NX support is enabled (Automated)
