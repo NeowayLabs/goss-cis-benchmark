@@ -1,10 +1,14 @@
 #!/bin/bash
 #
-# 6.2.10 Ensure users' dot files are not group or world writable
+# 6.2.10 Ensure users' .netrc Files are not group or world accessible (Automated)
 #
 # Description:
-# While the system administrator can establish secure permissions for users' "dot" files, the
-# users can easily override these.
+# While the system administrator can establish secure permissions for users'
+# .netrc files, the users can easily override these.
+#
+# Rationale:
+# .netrc files may contain unencrypted passwords that may be used to attack other
+# systems.
 
 set -o errexit
 set -o nounset
@@ -29,19 +33,35 @@ while read line; do
     if [ ${status} = "0" -a "${vars}x" != "x" ]; then
         set -- ${vars}
         user=${1-} && dir=${2-}
-        if [ ! -d "$dir" ]; then
+        if [ ! -d ${dir} ]; then
             echo "The home directory (${dir}) of user ${user} does not exist."
             stderr="1"
         else
-            for file in ${dir}/.[A-Za-z0-9]*; do
+            for file in ${dir}/.netrc; do
                 if [ ! -h "${file}" -a -f "${file}" ]; then
-                    fileperm=`ls -ld ${file} | cut -f1 -d" "`
-                    if [ $(echo ${fileperm} | cut -c6) != "-" ]; then
-                        echo "Group Write permission set on file ${file}"
+                    fileperm=$(ls -ld ${file} | cut -f1 -d" ")
+                    if [ $(echo ${fileperm} | cut -c5)  != "-" ]; then
+                        echo "Group Read set on ${file}"
+                        stderr="1"
+                    fi
+                    if [ $(echo ${fileperm} | cut -c6)  != "-" ]; then
+                        echo "Group Write set on ${file}"
+                        stderr="1"
+                    fi
+                    if [ $(echo ${fileperm} | cut -c7)  != "-" ]; then
+                        echo "Group Execute set on ${file}"
+                        stderr="1"
+                    fi
+                    if [ $(echo ${fileperm} | cut -c8)  != "-" ]; then
+                        echo "Other Read set on ${file}"
                         stderr="1"
                     fi
                     if [ $(echo ${fileperm} | cut -c9)  != "-" ]; then
-                        echo "Other Write permission set on file ${file}"
+                        echo "Other Write set on ${file}"
+                        stderr="1"
+                    fi
+                    if [ $(echo ${fileperm} | cut -c10)  != "-" ]; then
+                        echo "Other Execute set on ${file}"
                         stderr="1"
                     fi
                 fi
@@ -52,5 +72,5 @@ while read line; do
 done < /etc/passwd
 
 if [ ${stderr} != "0" ]; then
-   exit 1
+    exit 1
 fi

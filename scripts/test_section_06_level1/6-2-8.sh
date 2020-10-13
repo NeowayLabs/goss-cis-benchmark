@@ -1,17 +1,20 @@
 #!/bin/bash
 #
-# 6.2.8 Ensure users' home directories permissions are 750 or more
-# restrictive
+# 6.2.8 Ensure no users have .forward files (Automated)
 #
 # Description:
-# While the system administrator can establish secure permissions
-# for users' home directories, the users can easily override these.
+# The .forward file specifies an email address to forward the user's mail to.
+#
+# Rationale:
+# Use of the .forward file poses a security risk in that sensitive data may be
+# inadvertently transferred outside the organization. The .forward file also
+# poses a risk as it can be used to execute commands that may perform unintended
+# actions.
 
 set -o errexit
 set -o nounset
 
 declare dir=""
-declare dirperm=""
 declare line=""
 declare status="0"
 declare stderr="0"
@@ -33,24 +36,9 @@ while read line; do
             echo "The home directory (${dir}) of user ${user} does not exist."
             stderr="1"
         else
-            dirperm=$(ls -ld $dir | cut -f1 -d" ") || status=1
-            if [ ${status} = "0" ]; then
-                if [ $(echo ${dirperm} | cut -c6) != "-" ]; then
-                    echo "Group Write permission set on the home directory (${dir}) of user ${user}"
-                    stderr="1"
-                fi
-                if [ $(echo ${dirperm} | cut -c8) != "-" ]; then
-                    echo "Other Read permission set on the home directory (${dir}) of user ${user}"
-                    stderr="1"
-                fi
-                if [ $(echo ${dirperm} | cut -c9) != "-" ]; then
-                    echo "Other Write permission set on the home directory (${dir}) of user ${user}"
-                    stderr="1"
-                fi
-                if [ $(echo ${dirperm} | cut -c10) != "-" ]; then
-                    echo "Other Execute permission set on the home directory (${dir}) of user ${user}"
-                    stderr="1"
-                fi
+            if [ ! -h "${dir}/.forward" -a -f "${dir}/.forward" ]; then
+                echo ".forward file ${dir}/.forward exists"
+                stderr="1"
             fi
         fi
     fi
