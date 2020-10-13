@@ -1,23 +1,140 @@
 ---
-# CIS Ubuntu Linux 16.04 LTS Benchmark v1.1.0
+# CIS Ubuntu Linux 20.04 LTS Benchmark v1.0.0
 #
-# 5.2
-# 5.2.1 Ensure permissions on /etc/ssh/sshd_config are configured (Scored)
-# 5.2.2 Ensure SSH Protocol is set to 2 (Scored)
-# 5.2.3 Ensure SSH LogLevel is set to INFO (Scored)
-# 5.2.4 Ensure SSH X11 forwarding is disabled (Scored)
-# 5.2.5 Ensure SSH MaxAuthTries is set to 4 or less (Scored)
-# 5.2.6 Ensure SSH IgnoreRhosts is enabled (Scored)
-# 5.2.7 Ensure SSH HostbasedAuthentication is disabled (Scored)
-# 5.2.8 Ensure SSH root login is disabled (Scored)
-# 5.2.9 Ensure SSH PermitEmptyPasswords is disabled (Scored)
-# 5.2.10 Ensure SSH PermitUserEnvironment is disabled (Scored)
-# 5.2.11 Ensure only approved MAC algorithms are used (Scored)
-# 5.2.12 Ensure SSH Idle Timeout Interval is configured (Scored)
-# 5.2.13 Ensure SSH LoginGraceTime is set to one minute or less (Scored)
-# 5.2.14 Ensure SSH access is limited (Scored) - note: do not verified
-# 5.2.15 Ensure SSH warning banner is configured (Scored)
+# 5 Access, Authentication and Authorization
+# 5.1 Configure time-based job schedulers
+# 5.3.2 Ensure lockout for failed password attempts is configured (Automated) : not implemented
+# 5.3.3 Ensure password reuse is limited (Automated): not implemented
+# 5.3.4 Ensure password hashing algorithm is SHA-512 (Automated): not implemented
+# 5.4.1.4 Ensure inactive password lock is 30 days or less (Automated): not implemented
+# 5.4.1.1 Ensure password expiration is 365 days or less (Automated): not implemented
+# 5.4.1.5 Ensure all users last password change date is in the past (Automated): not implemented
+# 5.4.2 Ensure system accounts are secured (Automated): not implemented
+# 5.4.5 Ensure default user shell timeout is 900 seconds or less (Automated): not implemented
+# 5.6 Ensure access to the su command is restricted (Automated): not implemented
+# 5.5 Ensure root login is restricted to system console (Manual): not implemented
+# 5.6 Ensure access to the su command is restricted (Automated): not implemented
+
+command:
+  # 5.1.1 Ensure cron daemon is enabled and running (Automated)
+  systemctl is-enabled cron:
+    exit-status: 0
+    stdout:
+      - "enabled"
+  systemctl status cron | grep "active (running) ":
+    exit-status: 0
+
+  # 5.2.2 Ensure permissions on SSH private host key files are configured (Automated)
+  bash /tmp/test_section_05_level1/5-2-2.sh:
+    exit-status: 0
+    stdout:
+      - "Ownership and permissions of private key are correct"
+    stderr: []
+    timeout: 10000
+
+  # 5.2.3 Ensure permissions on SSH public host key files are configured (Automated)
+  bash /tmp/test_section_05_level1/5-2-3.sh:
+    exit-status: 0
+    stdout:
+      - "Ownership and permissions of public key are correct"
+    stderr: []
+    timeout: 10000
+
+  # 5.4.3 Ensure default group for the root account is GID 0 (Automated)
+  grep "^root:" /etc/passwd | cut -f4 -d:
+    exit-status: 0
+    stdout:
+      - "0"
+
+  # 5.4.4 Ensure default user umask is 027 or more restrictive (Automated)
+  bash /tmp/test_section_05_level1/5-2-4.sh:
+    exit-status: 0
+    stdout:
+      - "Default user umask is set"
+    stderr: []
+    timeout: 10000
+
 file:
+  # 5.1.2 Ensure permissions on /etc/crontab are configured (Automated)
+  /etc/crontab:
+    exists: true
+    mode: "0600"
+    owner: root
+    group: root
+
+  # 5.1.3 Ensure permissions on /etc/cron.hourly are configured (Automated)
+  /etc/cron.hourly/:
+    exists: true
+    mode: "0700"
+    owner: root
+    group: root
+
+  # 5.1.4 Ensure permissions on /etc/cron.daily are configured (Automated)
+  /etc/cron.daily/:
+    exists: true
+    mode: "0700"
+    owner: root
+    group: root
+
+  # 5.1.5 Ensure permissions on /etc/cron.weekly are configured (Automated)
+  /etc/cron.weekly/:
+    exists: true
+    mode: "0700"
+    owner: root
+    group: root
+
+  # 5.1.6 Ensure permissions on /etc/cron.monthly are configured (Automated)
+  /etc/cron.monthly/:
+    exists: true
+    mode: "0700"
+    owner: root
+    group: root
+
+  # 5.1.7 Ensure permissions on /etc/cron.d are configured (Automated)
+  /etc/cron.d/:
+    exists: true
+    mode: "0700"
+    owner: root
+    group: root
+
+  # 5.1.8 Ensure cron is restricted to authorized users (Automated)
+  /etc/cron.allow:
+    exists: true
+    mode: "0700"
+    owner: root
+    group: root
+    contains:
+      - "root"
+
+  # 5.1.9 Ensure at is restricted to authorized users (Automated)
+  /etc/at.allow:
+    exists: true
+    mode: "0700"
+    owner: root
+    group: root
+    contains:
+      - "root"
+
+  # 5.2 Configure SSH Server
+  # 5.2.1 Ensure permissions on /etc/ssh/sshd_config are configured (Scored)
+  # 5.2.4 Ensure SSH LogLevel is appropriate (Automated)
+  # 5.2.5 Ensure SSH X11 forwarding is disabled (Automated)
+  # 5.2.6 Ensure SSH MaxAuthTries is set to 4 or less (Automated)
+  # 5.2.7 Ensure SSH IgnoreRhosts is enabled (Automated)
+  # 5.2.8 Ensure SSH HostbasedAuthentication is disabled (Automated)
+  # 5.2.9 Ensure SSH root login is disabled (Automated)
+  # 5.2.10 Ensure SSH PermitEmptyPasswords is disabled (Automated)
+  # 5.2.11 Ensure SSH PermitUserEnvironment is disabled (Automated)
+  # 5.2.12 Ensure only strong Ciphers are used (Automated)
+  # 5.2.13 Ensure only strong MAC algorithms are used (Automated)
+  # 5.2.14 Ensure only strong Key Exchange algorithms are used (Automated)
+  # 5.2.15 Ensure SSH Idle Timeout Interval is configured (Automated)
+  # 5.2.16 Ensure SSH LoginGraceTime is set to one minute or less (Automated)
+  # 5.2.17 Ensure SSH access is limited (Automated)
+  # 5.2.19 Ensure SSH PAM is enabled (Automated)
+  # 5.2.20 Ensure SSH AllowTcpForwarding is disabled (Automated)
+  # 5.2.21 Ensure SSH MaxStartups is configured (Automated)
+  # 5.2.22 Ensure SSH MaxSessions is limited (Automated)
   /etc/ssh/sshd_config:
     exists: true
     mode: "0600"
@@ -38,8 +155,47 @@ file:
       - "ClientAliveCountMax 0"
       - "LoginGraceTime 60"
       - "Banner /etc/issue.net"
+      - "DenyUsers root"
+      - "UsePAM yes"
+      - "AllowTcpForwarding no"
+      - "MaxStartups 10:30:100"
+      - "MaxSessions 10"
+
+  # 5.2.18 Ensure SSH warning banner is configured (Automated)
   /etc/issue.net:
     exists: true
     mode: "0644"
     owner: root
     group: root
+
+  # 5.3.1 Ensure password creation requirements are configured (Automated)
+  /etc/security/pwquality.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    contains:
+      - "minlen = 14"
+      - "minclass = 4"
+  /etc/pam.d/common-password:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    contains:
+      - "pam_pwquality.so retry=3"
+
+  # 5.4 User Accounts and Environment
+  # 5.4.1 Set Shadow Password Suite Parameters
+  # 5.4.1.1 Ensure password expiration is 365 days or less (Automated)
+  # 5.4.1.2 Ensure minimum days between password changes is configured (Automated)
+  # 5.4.1.3 Ensure password expiration warning days is 7 or more (Automated)
+  /etc/login.defs:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    contains:
+      - "PASS_MAX_DAYS   365"
+      - "PASS_MIN_DAYS   1"
+      - "PASS_WARN_AGE   7"
