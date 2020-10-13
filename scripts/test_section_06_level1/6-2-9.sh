@@ -1,17 +1,21 @@
 #!/bin/bash
 #
-# 6.2.9 Ensure users own their home directories
+# 6.2.9 Ensure no users have .netrc files (Automated)
 #
 # Description:
-# The user home directory is space defined for the particular user to set local
-# environment variables and to store personal files.
+# The .netrc file contains data for logging into a remote host for
+# file transfers via FTP.
+#
+# Rationale:
+# The .netrc file presents a significant security risk since it stores passwords
+# in unencrypted form. Even if FTP is disabled, user accounts may have brought
+# over .netrc files from other systems which could pose a risk to those systems.
 
 set -o errexit
 set -o nounset
 
 declare dir=""
 declare line=""
-declare owner=""
 declare status="0"
 declare stderr="0"
 declare user=""
@@ -28,17 +32,14 @@ while read line; do
     if [ ${status} = "0" -a "${vars}x" != "x" ]; then
         set -- ${vars}
         user=${1-} && dir=${2-}
-        if [ ! -d "$dir" ]; then
-            echo "The home directory ($dir) of user ${user} does not exist."
+        if [ ! -d ${dir} ]; then
+            echo "The home directory (${dir}) of user ${user} does not exist."
             stderr="1"
         else
-            owner=$(stat -L -c "%U" "${dir}") || status=1
-            if [ ${status} = "0" ]; then
-                if [ "${owner}" != "${user}" ]; then
-                    echo "The home directory (${dir}) of user ${user} is owned by ${owner}."
-                    stderr="1"
-                fi
-            fi
+            if [ ! -h "${dir}/.netrc" -a -f "${dir}/.netrc" ]; then
+                echo ".netrc file ${dir}/.netrc exists"
+                stderr="1"
+           fi
         fi
     fi
 

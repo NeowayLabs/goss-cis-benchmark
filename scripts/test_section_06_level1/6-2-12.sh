@@ -1,44 +1,29 @@
 #!/bin/bash
 #
-# 6.2.12 Ensure no users have .netrc files
+# 6.2.12 Ensure all groups in /etc/passwd exist in /etc/group (Automated)
 #
 # Description:
-# The .netrc file contains data for logging into a remote host for
-# file transfers via FTP.
+# Over time, system administration errors and changes can lead to groups being
+# defined in /etc/passwd but not in /etc/group.
+#
+# Rationale:
+# Groups defined in the /etc/passwd file but not in the /etc/group file pose a
+# threat to system security since group permissions are not properly managed.
 
 set -o errexit
 set -o nounset
 
-declare dir=""
-declare line=""
+declare i=""
 declare status="0"
 declare stderr="0"
-declare user=""
-declare vars=""
 
-while read line; do
-
-    vars=$(
-            echo ${line} | \
-            egrep -v '^(root|halt|sync|shutdown)' | \
-            awk -F: '($7 != "/usr/sbin/nologin" && $7 != "/bin/false") { print $1 " " $6 }'
-          ) || status=1
-
-    if [ ${status} = "0" -a "${vars}x" != "x" ]; then
-        set -- ${vars}
-        user=${1-} && dir=${2-}
-        if [ ! -d ${dir} ]; then
-            echo "The home directory (${dir}) of user ${user} does not exist."
-            stderr="1"
-        else
-            if [ ! -h "${dir}/.netrc" -a -f "${dir}/.netrc" ]; then
-                echo ".netrc file ${dir}/.netrc exists"
-                stderr="1"
-           fi
-        fi
+for i in $(cut -s -d: -f4 /etc/passwd | sort -u ); do
+    grep -q -P "^.*?:[^:]*:$i:" /etc/group || status=1
+    if [ ${status} -ne 0 ]; then
+        echo "Group ${i} is referenced by /etc/passwd but does not exist in /etc/group"
+        stderr="1"
     fi
-
-done < /etc/passwd
+done
 
 if [ ${stderr} != "0" ]; then
     exit 1

@@ -1,14 +1,21 @@
 #!/bin/bash
 #
-# 6.2.11 Ensure no users have .forward files
+# 6.2.11 Ensure no users have .rhosts files (Automated)
 #
 # Description:
-# The .forward file specifies an email address to forward the user's mail to.
+# While no .rhosts files are shipped by default, users can easily create them.
+#
+# Rationale:
+# This action is only meaningful if .rhosts support is permitted in the file
+# /etc/pam.conf. Even though the .rhosts files are ineffective if support is
+# disabled in /etc/pam.conf , they may have been brought over from other systems
+# and could contain information useful to an attacker for those other systems.
 
 set -o errexit
 set -o nounset
 
 declare dir=""
+declare file=""
 declare line=""
 declare status="0"
 declare stderr="0"
@@ -30,10 +37,12 @@ while read line; do
             echo "The home directory (${dir}) of user ${user} does not exist."
             stderr="1"
         else
-            if [ ! -h "${dir}/.forward" -a -f "${dir}/.forward" ]; then
-                echo ".forward file ${dir}/.forward exists"
-                stderr="1"
-            fi
+            for file in ${dir}/.rhosts; do
+                if [ ! -h "${file}" -a -f "${file}" ]; then
+                    echo ".rhosts file in ${dir}"
+                    stderr="1"
+                fi
+            done
         fi
     fi
 
