@@ -55,6 +55,20 @@ Currently supports version 20.04 of Ubuntu Server.
   * 3.5.3.3.3 Ensure IPv6 outbound and established connections are configured (Manual): not implemented
   * 3.5.3.3.4 Ensure IPv6 firewall rules exist for all open ports (Manual): not implemented
 
+### Section 5
+
+  * 5.3.2 Ensure lockout for failed password attempts is configured (Automated) : not implemented
+  * 5.3.3 Ensure password reuse is limited (Automated): not implemented
+  * 5.3.4 Ensure password hashing algorithm is SHA-512 (Automated): not implemented
+  * 5.4.1.4 Ensure inactive password lock is 30 days or less (Automated): not implemented
+  * 5.4.1.1 Ensure password expiration is 365 days or less (Automated): not implemented
+  * 5.4.1.5 Ensure all users last password change date is in the past (Automated): not implemented
+  * 5.4.2 Ensure system accounts are secured (Automated): not implemented
+  * 5.4.5 Ensure default user shell timeout is 900 seconds or less (Automated): not implemented
+  * 5.6 Ensure access to the su command is restricted (Automated): not implemented
+  * 5.5 Ensure root login is restricted to system console (Manual): not implemented
+  * 5.6 Ensure access to the su command is restricted (Automated): not implemented
+
 ## Requirements
 
 * [Goss](https://github.com/aelsabbahy/goss#installation)
