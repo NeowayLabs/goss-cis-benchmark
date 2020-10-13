@@ -84,7 +84,7 @@ git clone https://github.com/NeowayLabs/goss-cis-benchmark
 
 ```shell
 cd goss-cis-benchmark
-cp -r ./scripts/test_section_06_level1 /tmp
+cp -r ./scripts/* /tmp
 goss --gossfile test_section_01_level1.yml validate
 goss --gossfile test_section_02_level1.yml validate
 goss --gossfile test_section_03_level1.yml validate
