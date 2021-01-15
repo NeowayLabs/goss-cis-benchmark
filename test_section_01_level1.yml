@@ -108,7 +108,7 @@ command:
     exit-status: 1
   
 
-  # 1.1.24 Disable USB Storage (Automated)  
+  # 1.1.24 Disable USB Storage (Automated)
   modprobe -n -v usb-storage:
     exit-status: 0
     stdout:
@@ -151,7 +151,7 @@ command:
     exit-status: 1
 
   # 1.6.4 Ensure core dumps are restricted (Automated)
-  grep -E '^(\*|\s).*hard.*core.*(\s+#.*)?$' /etc/security/limits.conf /etc/security/limits.d/* 2>/dev/null:  
+  grep -E '^(\*|\s).*hard.*core.*(\s+#.*)?$' /etc/security/limits.conf /etc/security/limits.d/* 2>/dev/null:
     exit-status: 0
     stdout:
       - "* hard core 0"
@@ -159,7 +159,7 @@ command:
     exit-status: 0
     stdout:
       - "fs.suid_dumpable = 0"
-  grep "fs.suid_dumpable" /etc/sysctl.conf /etc/sysctl.d/*:    
+  grep "fs.suid_dumpable" /etc/sysctl.conf /etc/sysctl.d/*:
     exit-status: 0
     stdout:
       - "fs.suid_dumpable = 0"
