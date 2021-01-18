@@ -106,7 +106,6 @@ command:
   # 1.1.23 Disable Automounting (Automated)
   systemctl is-enabled autofs:
     exit-status: 1
-  
 
   # 1.1.24 Disable USB Storage (Automated)
   modprobe -n -v usb-storage:
@@ -121,7 +120,7 @@ command:
   # 1.3 Configure sudo
   # 1.3.1 Ensure sudo is installed (Automated)
   dpkg -s sudo:
-    exit-status: 0    
+    exit-status: 0
 
   # 1.3.3 Ensure sudo log file exists (Automated)
   grep -Ei '^\s*Defaults\s+logfile=\S+' /etc/sudoers /etc/sudoers.d/*:
@@ -163,7 +162,7 @@ command:
     exit-status: 0
     stdout:
       - "fs.suid_dumpable = 0"
-    
+
 
   # 1.7 Mandatory Access Control
   # 1.7.1 Configure AppArmor
